@@ -15,14 +15,14 @@ cd $DATA_DIR
 
 count=1
 total=`ls *.dat | wc -l`
+echo "start loading data from $total files..."
 
 sudo mysql -uroot -e "SET global FOREIGN_KEY_CHECKS=0;"
 sudo mysql -uroot -e "SET global autocommit=0;"
 
+echo "generating pipe file..."
 ls *.dat | while read file; do
     table=`basename $file .dat | sed -e 's/_[0-9]_[0-9]//'`
-    echo "($count/$total) `date +"%D %T"` `ls -sh $file` to $table"
-    # 因为mysqlimport
     pipe=$table.pipe$count 
     rm -f $pipe
     mkfifo $pipe
@@ -30,6 +30,7 @@ ls *.dat | while read file; do
     let count++
 done
 
+echo "loading using mysqlimport..."
 ls *.pipe* | xargs mysqlimport --local $DATABASE \
                 --use-threads=8 \
                 --default-character-set=latin1 \
