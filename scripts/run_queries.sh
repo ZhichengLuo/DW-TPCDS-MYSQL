@@ -12,16 +12,18 @@ DATABASE=$1
 QUERY_DIR=$2
 OUTPUT_DIR=$3
 
-mkdir -p $OUTPUT_DIR && mkdir -p $OUTPUT_DIR/res && mkdir -p $OUTPUT_DIR/err && mkdir -p $OUTPUT_DIR/log
+rm -rf $OUTPUT_DIR
+mkdir -p $OUTPUT_DIR && mkdir -p $OUTPUT_DIR/res && mkdir -p $OUTPUT_DIR/err
 
 sudo mysql -uroot -e "SET GLOBAL slow_query_log = 1;"
 sudo mysql -uroot -e "SET GLOBAL long_query_time = 0;"
+sudo mysql -uroot -e "SET GLOBAL MAX_EXECUTION_TIME = 1800000;"
 
 run_query() {
 	query_file=$1
 	res_file="$OUTPUT_DIR/res/`basename $query_file .sql`.res"
 	err_file="$OUTPUT_DIR/err/`basename $query_file .sql`.err"
-	log_file="/var/log/mysql/tpcds-$DATABASE_`basename $query_file .sql`.log"
+	log_file="/var/log/mysql/tpcds-$DATABASE-`basename $query_file .sql`.log"
 	
 	sudo rm -f $log_file
 	:> $log_file
@@ -30,7 +32,7 @@ run_query() {
 
 	start=`date +%s.%N`
 	sudo mysql -uroot $DATABASE < $query_file > $res_file 2> $err_file
-	end=`end +%s.%N`
+	end=`date +%s.%N`
 	runtime=$( echo "$end - $start" | bc -l )
 	echo -e "mysql commond runtime: $runtime"
 	

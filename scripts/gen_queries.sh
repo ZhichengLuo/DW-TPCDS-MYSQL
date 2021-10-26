@@ -2,7 +2,7 @@
 # autor: ZhichengLuo
 # email: zcsysu@163.com
 
-IGNORE_QUERY_INDEX=(10 14 30 35)
+IGNORE_QUERY_INDEX=(10 14 35)
 
 gen_query_for_idx() {
     ./dsqgen \

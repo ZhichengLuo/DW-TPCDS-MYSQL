@@ -20,6 +20,7 @@ echo "start loading data from $total files..."
 sudo mysql -uroot -e "SET global FOREIGN_KEY_CHECKS=0;"
 sudo mysql -uroot -e "SET global autocommit=0;"
 
+ls *.pipe* | xargs rm -r
 echo "generating pipe file..."
 ls *.dat | while read file; do
     table=`basename $file .dat | sed -e 's/_[0-9]_[0-9]//'`
@@ -38,7 +39,6 @@ ls *.pipe* | xargs mysqlimport --local $DATABASE \
                 --replace \
                 --silent 
 
-ls *.pipe* | xargs rm -r
 
 sudo mysql -uroot -e "SET global FOREIGN_KEY_CHECKS=1;"
 sudo mysql -uroot -e "SET global autocommit=1;"
