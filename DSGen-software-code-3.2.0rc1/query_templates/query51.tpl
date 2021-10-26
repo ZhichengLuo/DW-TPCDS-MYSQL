@@ -58,9 +58,8 @@ where ss_sold_date_sk=d_date_sk
   and d_month_seq between [DMS] and [DMS]+11
   and ss_item_sk is not NULL
 group by ss_item_sk, d_date)
-[_LIMITA] select [_LIMITB] *
-from (select item_sk
-     ,d_date
+ select  *
+from (select item_sk,d_date
      ,web_sales
      ,store_sales
      ,max(web_sales)
@@ -71,14 +70,10 @@ from (select item_sk
                  ,case when web.d_date is not null then web.d_date else store.d_date end d_date
                  ,web.cume_sales web_sales
                  ,store.cume_sales store_sales
-           from web_v1 web Left join store_v1 store on (web.item_sk = store.item_sk
-                                                          and web.d_date = store.d_date)
-				UNION
-				select case when web.item_sk is not null then web.item_sk else store.item_sk end item_sk
-                 ,case when web.d_date is not null then web.d_date else store.d_date end d_date
-                 ,web.cume_sales web_sales
-                 ,store.cume_sales store_sales
-           from web_v1 web Right join store_v1 store on (web.item_sk = store.item_sk
+           from web_v1 web left join store_v1 store on (web.item_sk = store.item_sk and web.d_date = store.d_date) 
+ union select case when web.item_sk is not null then web.item_sk else store.item_sk end item_sk 
+  ,case when web.d_date is not null then web.d_date else store.d_date end d_date ,web.cume_sales web_sales ,store.cume_sales store_sales 
+ from web_v1 web right join store_v1 store on (web.item_sk = store.item_sk
                                                           and web.d_date = store.d_date)
           )x )y
 where web_cumulative > store_cumulative
