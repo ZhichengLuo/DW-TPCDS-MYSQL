@@ -1,6 +1,6 @@
 TPCDS-SQL for BDMA Data Warehouses
 ===
-This project is for implementing [TPC-DS benchmark](http://www.tpc.org/tpcds/) on MySQL
+This project is for implementing the power test of [TPC-DS benchmark](http://www.tpc.org/tpcds/) on MySQL. Since TPC-DS does not support the dialect of MySQL, we have modified these templates by script and make them adapted for MySQL.
 
 Requirements
 ---
@@ -21,15 +21,15 @@ Usages
         ```
 2. Create database. Here we name it as tpcds
     ```bash
-    mysql -e "create database $database"
+    mysql -e "create database $database_name"
     ```
 3. Create tables, using [tpcds.sql](DSGen-software-code-3.2.0rc1/tools/tpcds.sql) provided by tpcds toolkit
     ```bash
-    mysql -D$database < tpcds.sql 
+    mysql -D$database_name < tpcds.sql 
     ```
 4. Load data into MySQL
    ```bash
-   ./load_data.sh $database $your_data_dir
+   ./load_data.sh $database_name $your_data_dir
    ```
 5. Queries Generation
    ```bash
@@ -40,5 +40,5 @@ Usages
    # output_dir will include the result and error of query execution
    # the slow_query_log will be output in /var/log/mysql
 
-   ./run_queries.sh $database $query_dir $output_dir
+   ./run_queries.sh $database_name $query_dir $output_dir
    ```
