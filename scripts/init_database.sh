@@ -4,6 +4,7 @@
 
 if [ $#  -lt 1 ]; then
     echo "USAGE: ./init_database.sh <DATABASE>"
+    echo "This script is used to drop and then initiate the database"
     echo "ERROR: parameter missing"
     exit 1
 fi

@@ -1,6 +1,6 @@
 TPCDS-SQL for BDMA Data Warehouses
 ===
-This project is for implementing [TPC-DS](http://www.tpc.org/tpcds/) benchmark on MySQL
+This project is for implementing [TPC-DS benchmark](http://www.tpc.org/tpcds/) on MySQL
 
 Requirements
 ---
@@ -14,7 +14,7 @@ Usages
         ```bash
         ./dsdgen -scale $your_scale_factor -dir $your_data_dir
         ```
-   - Parallel generatio, using multiple parallel streams
+   - Parallel generation, using multiple parallel streams
         ```bash
         ./dsdgen -scale $your_scale_factor -dir $your_data_dir -parallel 2 -child 1 &
         ./dsdgen -scale $your_scale_factor -dir $your_data_dir -parallel 2 -child 2 &
