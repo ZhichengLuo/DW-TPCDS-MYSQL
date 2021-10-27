@@ -15,8 +15,10 @@ OUTPUT_DIR=$3
 rm -rf $OUTPUT_DIR
 mkdir -p $OUTPUT_DIR && mkdir -p $OUTPUT_DIR/res && mkdir -p $OUTPUT_DIR/err
 
+# use the slow_query_log function of MySQL to record the query time
 sudo mysql -uroot -e "SET GLOBAL slow_query_log = 1;"
 sudo mysql -uroot -e "SET GLOBAL long_query_time = 0;"
+# If a query runs for more than 30 mins, we force to stop it
 sudo mysql -uroot -e "SET GLOBAL MAX_EXECUTION_TIME = 1800000;"
 
 run_query() {

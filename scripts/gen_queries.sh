@@ -2,6 +2,8 @@
 # autor: ZhichengLuo
 # email: zcsysu@163.com
 
+# The execution time of the queries with the following index exceeded 30 mins under scale factor 1
+# So here I choose to skip the generation of these queries
 IGNORE_QUERY_INDEX=(10 14 35)
 
 gen_query_for_idx() {
