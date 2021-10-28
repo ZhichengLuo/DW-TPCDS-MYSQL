@@ -38,8 +38,9 @@ run_query() {
 	runtime=$( echo "$end - $start" | bc -l )
 	echo -e "mysql commond runtime: $runtime"
 	
-	[ -s "$ERROR_FILE" ] && echo -e "\tERROR detected, check $err_file"
-	[ -s "$ERROR_FILE" ] || rm -f "$ERROR_FILE"
+	# check error file
+	[ -s "$err_file" ] && echo -e "\tERROR detected, check $err_file"
+	[ -s "$err_file" ] || rm -f "$err_file"
 }
 
 echo "Database: $DATABASE"
